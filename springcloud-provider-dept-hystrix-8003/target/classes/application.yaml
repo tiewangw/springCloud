@@ -27,8 +27,9 @@ eureka:
   instance:
     #注册名默认是“IP名:应用名:应用端口名”，DESKTOP-IOAIPM5:springcloud-provider-dept:8001 即${spring.cloud.client.ipAddress}:${spring.application.name}:${spring.application.instance_id:${server.port}}
     #修改注册到eureka上实例的名称
-    instance-id: springcloud-provider-dept-8003
+    instance-id: springcloud-provider-dept-hystrix-8003
     prefer-ip-address: true  #true  可以显示服务的IP地址
+
 
 #actuator包的info信息(点击) eureka监控信息中的实例要显示的信息 (http://desktop-ioaipm5:8001/actuator/info)
 info:

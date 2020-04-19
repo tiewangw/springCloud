@@ -1,11 +1,10 @@
 package com.tie.springcloud.controller;
 
 import com.tie.springcloud.pojo.Dept;
-import com.tie.springcloud.service.DeptService;
+import com.tie.springcloud.service.DeptClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
-import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +15,7 @@ import java.util.List;
 @RestController
 public class DeptController {
     @Autowired
-    private DeptService deptService;
+    private DeptClientService deptService;
 
     //获取一些配置的信息，获取具体的微服务
     @Autowired

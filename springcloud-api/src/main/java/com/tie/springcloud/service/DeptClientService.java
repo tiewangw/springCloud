@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.List;
 
 @Service
-@FeignClient(value = "SPRINGCLOUD-PROVIDER-DEPT")
-public interface DeptService {
+@FeignClient(value = "SPRINGCLOUD-PROVIDER-DEPT",fallbackFactory = DeptClientServiceFallbackFactory.class)
+public interface DeptClientService {
 
     @GetMapping("/dept/list")
     public List<Dept> queryAll();

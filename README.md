@@ -108,3 +108,32 @@
 ### 11.4 在 springcloud-consumer-dept-feign 的 DeptConsumerController中注入DeptService,用DeptService重新实现方法
 ### 11.5 在 springcloud-consumer-dept-feign 主启动类中添加注解EnableFeignClients，启动测试
 
+## 12、Hystrix 服务熔断 ： 服务端
+### 12.1 创建springcloud-provider-dept-hystrix-8003 --复制 springcloud-provider-dept-8003 
+### 12.2 添加Hystrix依赖
+### 12.3 修改主启动类类名 ，yaml中修改 instance-id: springcloud-provider-dept-hystrix-8003
+### 12.4 DeptController中添加getDeptById的异常处理方法的熔断处理方法throw new Exception
+### 12.5 DeptController中添加熔断方法hystrixGetDeptById，在getDeptById上添加熔断注解 @HystrixCommand(fallbackMethod = "hystrixGetDeptById")
+### 12.6 主启动类添加注解@EnableCircuitBreaker   
+### 12.7 测试 http://localhost/consumer/dept/get/6 
+        提示 ： {"deptno":6,"dname":"no exists this Dept --->hystrix","db_source":"no this DATABASE in MYSQL"}
+        
+###  12.8 其他：
+    eureka. instance . prefer-ip-address: true  #true  可以显示服务的IP地址        
+        
+## 13、Hystrix 服务降级 ： 客户端 
+### 13.1 在springcloud-api 编写服务降级类 DeptClientServiceFallbackFactory
+### 13.1 在springcloud-api 的DeptClientService 接口上添加 注解 fallbackFactory = DeptClientServiceFallbackFactory.class
+### 13.3 在springcloud-consumer-dept-feign 工程 的yaml中开启Feign 服务降级
+         feign:
+           hystrix:
+             enabled: true
+### 13.4 测试
+         启动集群，一个provider 和 FeignDeptConsumer 可以正常查询
+         关闭provider后 会返回用户信息{"deptno":3,"dname":"Hystrix 服务降级，该服务已关闭！","db_source":" no data"}
+### 13.5 服务熔断和服务降级的区别    
+        https://www.jianshu.com/p/6f5b1095d749      
+
+        
+        
+        

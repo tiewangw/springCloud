@@ -1,5 +1,6 @@
 package com.tie.springcloud.controller;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.tie.springcloud.pojo.Dept;
 import com.tie.springcloud.service.DeptClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,23 @@ public class DeptController {
     }
 
     @GetMapping("/dept/get/{id}")  // http://localhost:8001/dept/get/1
-    public Dept getDeptById(@PathVariable long id){
+    @HystrixCommand(fallbackMethod = "hystrixGetDeptById")
+    public Dept getDeptById(@PathVariable long id) throws Exception {
         Dept dept = deptService.queryDeptById(id);
-        if(dept == null) {
-            throw new RuntimeException("springcloud-provider-dept-8003 : getDeptById -->Fial");
+        if(dept == null){
+            throw new Exception("没有改部门信息！");
         }
         return dept;
     }
+
+
+    public Dept hystrixGetDeptById(@PathVariable long id){
+        return new Dept().setDeptno(id)
+                         .setDname("no exists this Dept --->hystrix")
+                         .setDb_source("no this DATABASE in MYSQL");
+    }
+
+
 
     @PostMapping("/dept/post/{id}")  // http://localhost:8001/dept/post/1
     public Dept getDeptPostById(@PathVariable long id){

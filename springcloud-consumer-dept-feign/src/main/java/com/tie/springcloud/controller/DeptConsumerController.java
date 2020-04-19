@@ -1,7 +1,7 @@
 package com.tie.springcloud.controller;
 
 import com.tie.springcloud.pojo.Dept;
-import com.tie.springcloud.service.DeptService;
+import com.tie.springcloud.service.DeptClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +26,7 @@ public class DeptConsumerController{
      * 注入fegin实现的deptService
      */
     @Autowired
-    private DeptService deptService;
+    private DeptClientService deptService;
 
     @RequestMapping("/consumer/dept/list") //http://localhost/consumer/dept/list
     public List<Dept> queryAll() {
