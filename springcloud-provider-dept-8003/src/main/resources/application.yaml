@@ -1,0 +1,35 @@
+server:
+  port: 8003
+
+#mybatis配置
+mybatis:
+  type-aliases-package: com.tie.springcloud.pojo
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  config-location: classpath:mybatis/mybatis-config.xml
+
+#spring配置
+spring:
+  application:
+    name: springcloud-provider-dept
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db03?useUnicode=true&characterEncoding-utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+#eureka配置 ,把provider注册到eureka
+eureka:
+  client:
+    service-url:
+#      defaultZone: http://localhost:7001/eureka/
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    #注册名默认是“IP名:应用名:应用端口名”，DESKTOP-IOAIPM5:springcloud-provider-dept:8001 即${spring.cloud.client.ipAddress}:${spring.application.name}:${spring.application.instance_id:${server.port}}
+    #修改注册到eureka上实例的名称
+    instance-id: springcloud-provider-dept-8003
+
+#actuator包的info信息(点击) eureka监控信息中的实例要显示的信息 (http://desktop-ioaipm5:8001/actuator/info)
+info:
+  app.name: springcloud-tie
+
