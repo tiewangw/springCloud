@@ -1,0 +1,28 @@
+server:
+  port: 9527
+
+#spring配置
+spring:
+  application:
+    name: springcloud-zuul
+
+#eureka配置 ,注册到eureka
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    instance-id: zuul9527.com #这个可以随便起
+    prefer-ip-address: true  #true  可以显示服务的IP地址
+
+info:
+  app.name: springcloud-zuul
+
+zuul:
+  routes:
+    mydept.serviceId: springcloud-provider-dept
+    mydept.path: /mydept/**
+#  ignored-services: springcloud-provider-dept  # 隐藏某个服务路径
+  ignored-services: "*" #所有路径都屏蔽，都必须走网关
+  prefix: /tie # 设置公共的前缀  # http://tie.springcloud.com:9527/tie/mydept/dept/get/1
+#  ignore-local-service: true

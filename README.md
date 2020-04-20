@@ -132,8 +132,75 @@
          启动集群，一个provider 和 FeignDeptConsumer 可以正常查询
          关闭provider后 会返回用户信息{"deptno":3,"dname":"Hystrix 服务降级，该服务已关闭！","db_source":" no data"}
 ### 13.5 服务熔断和服务降级的区别    
-        https://www.jianshu.com/p/6f5b1095d749      
-
+        https://www.jianshu.com/p/6f5b1095d749  
+        
+            
+## 14 Hystrix -dashboard 监控信息     
+### 14.1 创建springcloud-consumer-hystrix-dashboard 工程 （）
+### 14.2 pom中导入 springcloud-consumer-dept-80 相同的依赖 
+### 14.3 pom中添加hystrix-dashboard 依赖 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
+            <version>1.4.7.RELEASE</version>
+        </dependency>
+### 14.4 配置yaml ： server.port :9001
+### 14.5 编写主启动类 
+#### 14.5.1 添加注解@EnableHystrixDashboard //开启dashboard监控  
+        注意： 确认8001-8003 provider服务中有 actuator完善监控信息包-->
+#### 14.5.2 编写ServletRegistrationBean
+     
+### 14.6  启动服务 测试
+        1、http://localhost:9001/hystrix 查看监控界面能否打开   
+        2、http://eureka7003.com:7003/  查看eureka是否访问
+        3、http://localhost:8003/dept/list 查看服务是否正常访问数据    
+        4、http://localhost:8003/actuator/hystrix.stream 查看查询的时候是否有ping的信息  
+        5、在 1 的界面 添加 4 的监控路劲，Delay和Title 可以自定义 ，点击Monitor Stream 查看监控信息 
+        error： com.sun.jersey.api.client.ClientHandlerException: java.net.ConnectException: Connection refused: connect
+                dashboard没有监控的服务，把 1的界面信息添上进入监控页面就OK
+        
+ 
+## 15 zuul 网关
+### 15.1 新建 springcloud-zuul-9527 工程 ，
+### 15.2 添加dashboard中的依赖，导入zuul依赖
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zuul</artifactId>
+            <version>1.4.7.RELEASE</version>
+        </dependency>
+### 15.3 添加yaml文件 ，在C:\Windows\System32\drivers\etc\hosts中添加127.0.0.1 127.0.0.1 tie.springcloud.com
+### 15.4 编写主启动类，添加注解@EnableZuulProxy
+        http://eureka7003.com:7003/
+        http://localhost:8003/dept/list
         
         
+        zuul:
+          routes:
+            mydept.serviceId: springcloud-provider-dept # http://tie.springcloud.com:9527/springcloud-provider-dept/dept/list
+            mydept.path: /mydept/**  # http://tie.springcloud.com:9527/springcloud-provider-dept/mydept/dept/list
+        #  ignored-services: springcloud-provider-dept  # 隐藏某个服务路径
+          ignored-services: "*" #所有路径都屏蔽，都必须走网关
+          prefix: /tie # 设置公共的前缀  # http://tie.springcloud.com:9527/tie/mydept/dept/get/1
+ 
+ 
+# 总结
+###    1、3个集群
+        springcloud-eureka-7001                         http://eureka7001.com:7001/  
+        springcloud-eureka-7002                         http://eureka7002.com:7002/
+        springcloud-eureka-7003                         http://eureka7003.com:7003/      
+###    2、4个服务端服务
+        springcloud-provider-dept-8001                  http://localhost:8001/dept/list
+        springcloud-provider-dept-8002                  http://localhost:8002/dept/list
+        springcloud-provider-dept-8003                  http://localhost:8003/dept/list
+        springcloud-provider-dept-hystrix-8003(服务熔断) http://localhost:8003/dept/list
+            服务熔断提示： {"deptno":57,"dname":"no exists this Dept --->hystrix","db_source":"no this DATABASE in MYSQL"}
+###    3、2个客户端服务
+        springcloud-consumer-dept-80                    http://localhost/consumer/dept/get/5    
+        springcloud-consumer-dept-feign(服务降级)        http://localhost/consumer/dept/get/5   
+            服务降级提示： {"deptno":3,"dname":"Hystrix 服务降级，该服务已关闭！","db_source":" no data"}           
+###    4、1个网关服务
+       springcloud-zuul-9527                            http://tie.springcloud.com:9527/tie/mydept/dept/list
+###    5、1个监控服务
+       springcloud-consumer-hystrix-dashboard           http://localhost:8003/actuator/hystrix.stream 
+       
         

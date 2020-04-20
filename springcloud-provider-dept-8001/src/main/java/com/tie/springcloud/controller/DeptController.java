@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 public class DeptController {
     @Autowired
-    private DeptClientService deptService;
+    private DeptClientService deptService;  //ideal校验报错，不影响
 
     //获取一些配置的信息，获取具体的微服务
     @Autowired

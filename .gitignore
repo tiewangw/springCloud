@@ -8,3 +8,5 @@
 /springcloud-provider-dept-8001/target/
 /springcloud-provider-dept-8002/target/
 /springcloud-provider-dept-8003/target/
+.ideal/
+.iml

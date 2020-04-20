@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
-@Configuration   //相当于spring中的applicationContext.xml
+@Configuration   //相当于spring中的applicationContext.xml，可以写自己的负载均衡算法
 public class ConfigBean {
 
     /**
