@@ -1,4 +1,13 @@
-# Project exclude paths
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+
 /springcloud-api/target/
 /springcloud-consumer-dept-80/target/
 /springcloud-consumer-dept-feign/target/
@@ -10,3 +19,4 @@
 /springcloud-provider-dept-8003/target/
 .ideal/
 .iml
+

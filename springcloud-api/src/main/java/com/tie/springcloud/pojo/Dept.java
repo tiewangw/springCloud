@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import javax.xml.ws.Service;
 import java.io.Serializable;
 import java.util.zip.CheckedInputStream;
 
@@ -12,6 +13,8 @@ import java.util.zip.CheckedInputStream;
 @NoArgsConstructor
 @Accessors(chain = true) //链式写法
 public class Dept implements Serializable { //微服务实体类必须实现序列化
+    private static final long serialVersionUID = -8332570424896382794L;
+
 
     private Long deptno;//主键
 
