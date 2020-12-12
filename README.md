@@ -1,4 +1,7 @@
+
+
 #   spring 国内脚手架  定制版 Spring Initializr : https://start.aliyun.com/
+
 #   修改maven镜像  ：在 setting.xml中添加一下信息
         <localRepository>D:\MySoft\apache-maven-tie\respository</localRepository>
         <mirror>
@@ -7,7 +10,6 @@
             <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
             <mirrorOf>central</mirrorOf>
         </mirror>
-
 
 #一、在springcloud的pom.xml中添加父依赖
         注意：Spring Cloud和Spring Boot的版本匹配
@@ -178,7 +180,9 @@
         error： com.sun.jersey.api.client.ClientHandlerException: java.net.ConnectException: Connection refused: connect
                 dashboard没有监控的服务，把 1的界面信息添上进入监控页面就OK
 
-​		 1、http://localhost:9001/hystrix![1607736145637](file/1607736145637.png)
+​		 1、http://localhost:9001/hystrix
+
+![1607736145637](file/1607736145637.png)
 
 
 
